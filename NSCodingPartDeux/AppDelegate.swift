@@ -42,9 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let pathArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         
-        let pathString = pathArray[0]
+        let pathString = pathArray.first
         
-        NSKeyedArchiver.archiveRootObject(thisUser, toFile: "pathString")
+        let filePathString = pathString! + "/localStorage.plist"
+        
+        NSKeyedArchiver.archiveRootObject(thisUser, toFile: "filePathString")
         
         return true
     }
