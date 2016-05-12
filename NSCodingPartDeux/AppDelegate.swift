@@ -16,6 +16,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let jeffUser :UserProfile = UserProfile(name: "Jeff", userID: "jtligon", password: "muhahahaha", profile: NSURL(string: "htps://www.google.com")!)
+        
+        let dougUser = UserProfile(name: "Doug", userID: "dhughes", password: "java", profile: NSURL(string: "https://oracle.com")!)
+        
+        let userArray = [jeffUser, dougUser]
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let lastUserData = defaults.objectForKey("lastUser") as? NSData{
+            let lastUser = NSKeyedUnarchiver.unarchiveObjectWithData(lastUserData)
+            if lastUser?.name == "Jeff"{
+                print("we got jeff!")
+            }
+        }
+        
+        let randomPick = arc4random() % 2
+        
+        let thisUser = userArray[Int(randomPick)]
+        
+        let data:NSData = NSKeyedArchiver.archivedDataWithRootObject(thisUser)
+        
+        defaults.setObject(data, forKey: "lastUser")
+        
+        let pathArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        
+        let pathString = pathArray[0]
+        
+        NSKeyedArchiver.archiveRootObject(thisUser, toFile: "pathString")
+        
         return true
     }
 
